@@ -15,5 +15,14 @@ class BukuModel extends Model {
         }
         return $this->where(['id_buku'=>$idbuku])->first();
     } 
+    public function findBuku($cari){
+
+        error_log('cari(model): ' . $cari); //untuk mencari masalah apakah dimodel atau controller
+
+        if($cari == false){
+            return $this->findAll();
+        }
+        return $this->table('buku')->like('Judul', $cari)->orLike('pengarang', $cari);
+    }
 }
 ?>

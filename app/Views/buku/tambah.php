@@ -34,62 +34,75 @@
 </style>
 <div class="container">
     <div class="col">
-            <h3 class="mt-2">Form Tambah Buku</h3>
-            <form action="/buku/simpan" method="post" class="mt-4" enctype="multipart/form-data">
+        <h3 class="mt-2">Form Tambah Buku</h3>
+        <form action="/buku/simpan" method="post" class="mt-4" enctype="multipart/form-data">
             <?= csrf_field(); ?>
 
+            <div class="form-group row">
+                <label for="judul" class="col-sm-2 col-form-label">Judul</label>
+                <div class="col-sm-10">
+                    <input type="text" id="judul" 
+                           class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" 
+                           name="judul" autofocus value="<?= old('judul'); ?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('judul'); ?>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group row">
-                <label for="Judul" class="col-sm-2 col-form-label">Judul</label>
+                <label for="pengarang" class="col-sm-2 col-form-label">Pengarang</label>
                 <div class="col-sm-10">
-                <input type="text" id="judul" class="form-control <?= ($validation->hasError('Judul')) ? 'is-invalid' : ''; ?>" name="judul" autofocus value="<?= old('judul'); ?>">
-                <div class="invalid-feedback">
-                    <?= $validation->getError('Judul'); ?>
+                    <input type="text" id="pengarang" 
+                           class="form-control <?= ($validation->hasError('pengarang')) ? 'is-invalid':"";?>" 
+                           name="pengarang" value="<?= old('pengarang'); ?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('pengarang'); ?>
+                    </div>
                 </div>
             </div>
+
             <div class="form-group row">
-                <label for="Pengarang" class="col-sm-2 col-form-label">Pengarang</label>
+                <label for="penerbit" class="col-sm-2 col-form-label">Penerbit</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control <?= ($validation->hasError('pengarang')) ? 'is-invalid':"";?>" id="pengarang" name="pengarang" value="<?= old('pengarang'); ?>">
-                <div class="invalid-feedback">
-                    <?= $validation->getError('pengarang'); ?>
+                    <input type="text" id="penerbit" 
+                           class="form-control <?= ($validation->hasError('penerbit')) ? 'is-invalid':"";?>" 
+                           name="penerbit" value="<?= old('penerbit'); ?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('penerbit'); ?>
+                    </div>
                 </div>
             </div>
-            </div>
+
             <div class="form-group row">
-                <label for="inputPenerbit" class="col-sm-2 col-form-label">Penerbit</label>
+                <label for="thn_terbit" class="col-sm-2 col-form-label">Tahun Terbit</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control <?= ($validation->hasError('penerbit')) ? 'is-invalid':"";?>" name="penerbit" value="<?= old('penerbit'); ?>">
-                <div class="invalid-feedback">
-                    <?= $validation->getError('penerbit'); ?>
+                    <input type="text" id="thn_terbit"
+                           class="form-control <?= ($validation->hasError('thn_terbit')) ? 'is-invalid':"";?>" 
+                           name="thn_terbit" value="<?= old('thn_terbit'); ?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('thn_terbit'); ?>
+                    </div>
                 </div>
             </div>
-            </div>
+
             <div class="form-group row">
-                <label for="inputTahun" class="col-sm-2 col-form-label">Tahun Terbit</label>
+                <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control <?= ($validation->hasError('thn_terbit')) ? 'is-invalid':"";?>" name="thn_terbit" value="<?= old('thn_terbit'); ?>">
-                <div class="invalid-feedback">
-                    <?= $validation->getError('thn_terbit'); ?>
+                    <input type="file" id="sampul" name="sampul" 
+                           class="form-control <?= ($validation->hasError('sampul')) ? 'is-invalid':"";?>">
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('sampul'); ?>
+                    </div>
                 </div>
             </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputSampul" class="col-sm-2 col-form-label">Sampul</label>
-                <div class="col-sm-10">
-                <input type="file" class="form-control <?= ($validation->hasError('sampulg')) ? 'is-invalid':"";?>" value="<?= old('sampul'); ?>">
-                </div>
-            <div class="invalid-feedback">
-                    <?= $validation->getError('sampul'); ?>
-                </div>
-            </div>
-            <div class="form-group row">
+
+            <div class="form-group row mt-3">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </div> 
             </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 <?= $this->endSection(); ?>

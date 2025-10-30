@@ -20,10 +20,11 @@ class Pager extends BaseConfig
      *
      * @var array<string, string>
      */
-    public array $templates = [
+    public $templates = [ //araay dibuang
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
         'default_head'   => 'CodeIgniter\Pager\Views\default_head',
+        'page_buku'       => 'App\Views\buku\page_buku', //menambah array page_buku
     ];
 
     /**

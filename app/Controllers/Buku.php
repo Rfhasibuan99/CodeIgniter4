@@ -14,9 +14,22 @@ class Buku extends BaseController{
     }
 
     public function index(){
+        $currentPage = $this->request->getVar('page_buku') ?? 1;
+        $cari = $this->request->getVar('cari');
+
+    if ($cari) {
+        // misal findBuku() kamu sudah handle query builder + paginate
+        $buku = $this->BukuModel->findBuku($cari)->paginate(2, 'buku');
+    } else {
+        $buku = $this->BukuModel->paginate(2, 'buku');
+    }
+    error_log('cari(controller): ' . $cari);
+    error_log('buku: ' . json_encode($buku));
         $data = [
             'title' => 'Daftar Buku',
-            'buku' => $this->BukuModel->getBuku()
+            'buku' => $buku,
+            'pager' => $this->BukuModel->pager,
+            'current' => $currentPage
         ];
 
         return view('buku/index', $data);
@@ -89,14 +102,14 @@ class Buku extends BaseController{
     $fileSampul = $this->request->getFile('sampul');
     
     // Beri nama acak untuk file
-    $namaSampul = $fileSampul->getName();
+    $namaSampul = $fileSampul->getRandomName();
 
     // Pindahkan file ke folder img
     $fileSampul->move('img', $namaSampul);
 
     // Simpan data ke database
     $this->BukuModel->save([
-        'Judul'        => $this->request->getVar('judul'),
+        'Judul'        => $this->request->getVar('Judul'),
         'pengarang'    => $this->request->getVar('pengarang'),
         'penerbit'     => $this->request->getVar('penerbit'),
         'thn_terbit' => $this->request->getVar('thn_terbit'),
@@ -113,6 +126,10 @@ public function hapus($idbuku){
     }
     
     public function ubah($idbuku){
+        $buku = $this->BukuModel->getBuku($idbuku);
+        if (empty($buku)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Buku dengan ID ' . $idbuku . ' tidak ditemukan.');
+        }
         $data = [
             'title' => 'Form Ubah Data Buku',
             'validation' => \Config\Services::validation(),
@@ -125,11 +142,11 @@ public function hapus($idbuku){
    public function update($idbuku)
     {
         // Cek Judul: Validasi unik (is_unique) di form ubah.
-        $bukuLama = $this->BukuModel->getBuku($this->request->getVar('id_buku'));
-        if ($bukuLama['Judul'] == $this->request->getVar('judul')) {
+        $bukuLama = $this->BukuModel->getBuku($this->request->getVar($idbuku));
+        if ($bukuLama['Judul'] == $this->request->getVar('Judul')) {
             $rule_judul = 'required';
         } else {
-            $rule_judul = 'required|is_unique[buku.judul]';
+            $rule_judul = 'required|is_unique[buku.Judul]';
         }
 
         // Validasi Form
@@ -175,7 +192,7 @@ public function hapus($idbuku){
         // Simpan data yang diperbarui ke database
         $this->BukuModel->save([
             'id_buku' => $idbuku,
-            'Judul' => $this->request->getVar('judul'),
+            'Judul' => $this->request->getVar('Judul'),
             'pengarang' => $this->request->getVar('pengarang'),
             'penerbit' => $this->request->getVar('penerbit'),
             'thn_terbit' => $this->request->getVar('thn_terbit'),
