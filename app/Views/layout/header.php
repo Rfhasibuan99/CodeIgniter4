@@ -26,6 +26,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/anggota">Daftar Anggota</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>

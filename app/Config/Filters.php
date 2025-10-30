@@ -13,6 +13,8 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use Myth\Auth\Filters\LoginFilter as Login;
+use Myth\Auth\Filters\PermissionFilter;
+use Myth\Auth\Filters\RoleFilter;
 
 class Filters extends BaseFilters
 {
@@ -36,6 +38,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'login'         => Login::class,
+        'role'          => RoleFilter::class,
+        'permission'    => PermissionFilter::class,
     ];
 
     /**
